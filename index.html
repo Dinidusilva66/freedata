@@ -30,6 +30,11 @@
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
 
+        /* Remove underline from the button */
+        a, button {
+            text-decoration: none;  /* Ensure there is no underline */
+        }
+
         /* Form Container */
         .container {
             background-color: white;
@@ -266,8 +271,8 @@
                 <input type="tel" id="phone-number" name="phone-number" placeholder="Enter your number">
             </div>
 
-            <input type="submit" value="Submit">
-            <div id="error-message" class="error" style="display: none;">Please enter a valid 9-digit phone number.</div>
+            <input type="submit" value="ඇතුලත් කරන්න">
+            <div id="error-message" class="error" style="display: none;">කරුණාකර නිවැරදි දුරකථන අංකයක් ඇතුලත් කරන්න</div>
         </form>
         <br><br>
 
@@ -283,7 +288,7 @@
             <div id="progress-bar" class="progress-bar">0%</div>
         </div>
 
-        <div id="progress-message">මෙය පිරෙනක් ශෙයාර් කිරීම අවශය වේ</div><br><br>
+        <div id="progress-message">මෙය 100% වනතෙක් ශෙයාර් කිරීම අවශය වේ</div><br><br>
 
         <div id="success-message" class="success-message">✅ ශෙයාර් කිරීම සාර්ථකයි</div>
 
