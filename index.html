@@ -79,6 +79,8 @@
             border-left: none;
             border-radius: 0 5px 5px 0;
             outline: none;
+            -webkit-appearance: none; /* Removes default appearance on mobile */
+            -moz-appearance: textfield; /* Removes default appearance on mobile */
         }
 
         /* Buttons */
@@ -94,20 +96,19 @@
             display: block;
             margin: 10px auto;
             width: 100%;
+            text-decoration: none; /* Removed text-decoration */
         }
 
         .share-btn {
             background-color: #007BFF;
             display: none;
             font-weight: bold;
-            text-decoration: none;
         }
 
         .data-btn {
             background-color: #FF9800;
             display: none;
             font-weight: bold;
-            text-decoration: none;
         }
 
         input[type="submit"]:hover {
@@ -190,7 +191,7 @@
             <label for="phone-number"><b>දුරකථන අංකය "0" නොමැතිව ඇතුලත් කරන්න<br>උදා:- "75XXXXXXXX"</b></label>
             <div class="phone-number-container">
                 <span class="country-code">+94</span>
-                <input type="tel" id="phone-number" name="phone-number" placeholder="Enter your number">
+                <input type="tel" id="phone-number" name="phone-number" placeholder="Enter your number" inputmode="numeric">
             </div>
 
             <input type="submit" value="Submit">
@@ -218,8 +219,10 @@
         <!-- Success Message -->
         <div id="success-message" class="success-message">✅ ශෙයාර් කිරීම සාර්ථකයි</div>
 
-        <!-- Data Button -->
-        <button id="data-btn" class="data-btn" style="display:none;">ඔබගේ ඩේටා ලබා ගන්න</button>
+        <!-- Data Button with Link -->
+        <a href="https://www.example.com" target="_blank">
+            <button id="data-btn" class="data-btn" style="display:none;">ඔබගේ ඩේටා ලබා ගන්න</button>
+        </a>
 
     </div>
 
