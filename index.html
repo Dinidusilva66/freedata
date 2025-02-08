@@ -218,6 +218,9 @@
         <!-- Success Message -->
         <div id="success-message" class="success-message">✅ ශෙයාර් කිරීම සාර්ථකයි</div>
 
+        <!-- Data Button -->
+        <button id="data-btn" class="data-btn" style="display:none;">ඔබගේ ඩේටා ලබා ගන්න</button>
+
     </div>
 
     <script>
@@ -269,6 +272,7 @@
             // Once 100% is reached, show the success message and the next button
             if (shareClicks === 5) {
                 document.getElementById("success-message").style.display = "block"; // Show success message
+                document.getElementById("data-btn").style.display = "block"; // Show data button
             }
         }
     </script>
