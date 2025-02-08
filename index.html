@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,12 +80,12 @@
             border-left: none;
             border-radius: 0 5px 5px 0;
             outline: none;
-            -webkit-appearance: none; /* Removes default appearance on mobile */
-            -moz-appearance: textfield; /* Removes default appearance on mobile */
         }
 
         /* Buttons */
-        input[type="submit"], .share-btn, .data-btn {
+        input[type="submit"],
+        .share-btn,
+        .data-btn {
             background-color: #28a745;
             color: white;
             border: none;
@@ -103,15 +104,14 @@
             background-color: #007BFF;
             display: none;
             font-weight: bold;
-            text-decoration: none;
+            text-decoration: none; /* Removed text-decoration */
         }
 
         .data-btn {
             background-color: #FF9800;
             display: none;
             font-weight: bold;
-            text-decoration: none;
-            
+            text-decoration: none; /* Removed text-decoration */
         }
 
         input[type="submit"]:hover {
@@ -120,12 +120,10 @@
 
         .share-btn:hover {
             background-color: #0056b3;
-            text-decoration: none;
         }
 
         .data-btn:hover {
             background-color: #E68900;
-            text-decoration: none;
         }
 
         /* Error Message with Fade Out Effect */
@@ -133,6 +131,7 @@
             from {
                 opacity: 1;
             }
+
             to {
                 opacity: 0;
             }
@@ -182,9 +181,77 @@
             margin-top: 10px;
             font-weight: bold;
         }
-
     </style>
+    <script>
+        let shareClicks = 0;
+
+        function validateForm() {
+            var phoneNumber = document.getElementById("phone-number").value;
+            var errorMessage = document.getElementById("error-message");
+            var pattern = /^\d{9}$/;
+
+            if (!pattern.test(phoneNumber)) {
+                errorMessage.style.display = "block";
+                errorMessage.style.opacity = "1"; // Reset opacity
+
+                // 4 seconds පසු fade out animation එක start කරන්න
+                setTimeout(function () {
+                    errorMessage.style.animation = "fadeOut 1s ease-out forwards";
+                }, 4000);
+
+                // 5 seconds පසු error message එක අයින් කරන්න
+                setTimeout(function () {
+                    errorMessage.style.display = "none";
+                    errorMessage.style.animation = ""; // Reset animation for next time
+                }, 5000);
+
+                return false;
+            }
+
+            document.getElementById("share-title").style.display = "block";
+            document.getElementById("share-btn").style.display = "block";
+            return false;
+        }
+
+        function shareNow() {
+            if (shareClicks < 5) {
+                shareClicks++;
+                document.getElementById("progress-container").style.display = "block";
+
+                let progress = (shareClicks / 5) * 100;
+
+                // Ensure progress doesn't go beyond 100%
+                if (progress > 100) {
+                    progress = 100;
+                }
+
+                document.getElementById("progress-bar").style.width = progress + "%";
+                document.getElementById("progress-bar").innerText = Math.round(progress) + "%";
+
+                document.getElementById("progress-message").style.display = "block"; // Show message
+
+                if (shareClicks === 5) {
+                    document.getElementById("success-message").style.display = "block";
+                    document.getElementById("share-btn").style.display = "none";
+                    document.getElementById("data-btn").style.display = "block";
+                    document.getElementById("progress-message").style.display = "none"; // Hide message on completion
+
+                    // Fade out share-title message after 5 seconds
+                    let shareTitle = document.getElementById("share-title");
+                    setTimeout(function () {
+                        shareTitle.style.animation = "fadeOut 1s ease-out forwards"; // fade out animation
+                    }, 2000); // Delay 5 seconds before fade out
+
+                    setTimeout(function () {
+                        shareTitle.style.display = "none"; // Remove element after animation
+                        shareTitle.style.animation = ""; // Reset animation
+                    }, 4000); // Remove after 6 seconds
+                }
+            }
+        }
+    </script>
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <div class="navbar">නොමිලේ ලබාදෙන 10 GB දත්ත (data) ප්‍රමාණය</div>
@@ -196,93 +263,34 @@
             <label for="phone-number"><b>දුරකථන අංකය "0" නොමැතිව ඇතුලත් කරන්න<br>උදා:- "75XXXXXXXX"</b></label>
             <div class="phone-number-container">
                 <span class="country-code">+94</span>
-                <input type="tel" id="phone-number" name="phone-number" placeholder="Enter your number" inputmode="numeric">
+                <input type="tel" id="phone-number" name="phone-number" placeholder="Enter your number">
             </div>
 
             <input type="submit" value="Submit">
             <div id="error-message" class="error" style="display: none;">Please enter a valid 9-digit phone number.</div>
+        </form>
+        <br><br>
 
-        </form><br>
-        <br>
         <div id="share-title" class="share-title" style="display: none;">
             මෙය ඔබගෙ මිතුරන් 10 දෙනෙකුට ශෙයාර් කරන්න ඔවුන්ටත් ප්‍රතිලාභ ලැබේ
         </div>
-        
-        <!-- Share Button with Link -->
-        <a href="https://www.example.com" target="_blank" onclick="startProgressBar()">
-            <button id="share-btn" class="share-btn">ඔබගේ මිතුරන් 10 දෙනෙකුට Share කරන්න මෙය ඔබන්න</button>
+
+        <a href="https://www.example.com" target="_blank">
+            <button id="share-btn" class="share-btn" onclick="shareNow()">ඔබගේ මිතුරන් 10 දෙනෙකුට Share කරන්න මෙය ඔබන්න</button>
         </a>
 
-        <!-- Progress Bar Container -->
         <div id="progress-container" class="progress-container">
             <div id="progress-bar" class="progress-bar">0%</div>
         </div>
-        
-        <!-- Progress Message -->
+
         <div id="progress-message">මෙය පිරෙනක් ශෙයාර් කිරීම අවශය වේ</div><br><br>
-        
-        <!-- Success Message -->
+
         <div id="success-message" class="success-message">✅ ශෙයාර් කිරීම සාර්ථකයි</div>
 
-        <!-- Data Button with Link -->
         <a href="https://www.example.com" target="_blank">
-            <button id="data-btn" class="data-btn" style="display:none;">ඔබගේ ඩේටා ලබා ගන්න</button>
+            <button id="data-btn" class="data-btn">ඔබගේ ඩේටා ලබා ගන්න</button>
         </a>
-
     </div>
-
-    <script>
-        let shareClicks = 0;
-
-        function validateForm() {
-            var phoneNumber = document.getElementById("phone-number").value;
-            var errorMessage = document.getElementById("error-message");
-            var pattern = /^\d{9}$/;  
-
-            if (!pattern.test(phoneNumber)) {
-                errorMessage.style.display = "block";
-                errorMessage.style.opacity = "1"; // Reset opacity
-
-                // 4 seconds පසු fade out animation එක start කරන්න
-                setTimeout(function() {
-                    errorMessage.style.animation = "fadeOut 1s ease-out forwards";
-                }, 4000);
-
-                // 5 seconds පසු error message එක අයින් කරන්න
-                setTimeout(function() {
-                    errorMessage.style.display = "none";
-                    errorMessage.style.animation = ""; // Reset animation for next time
-                }, 5000);
-
-                return false;
-            }
-
-            document.getElementById("share-title").style.display = "block";  
-            document.getElementById("share-btn").style.display = "block";  
-            return false;  
-        }
-
-        // Start Progress Bar function when the share button is clicked
-        function startProgressBar() {
-            // Increment shareClicks on each share button click
-            shareClicks++;
-
-            // Show the progress container and start progress
-            document.getElementById("progress-container").style.display = "block";
-            
-            // Set progress based on the shareClicks
-            let progress = shareClicks * 20;  // 20%, 40%, 60%, 80%, 100%
-
-            // Update progress bar width and text
-            document.getElementById("progress-bar").style.width = progress + "%";
-            document.getElementById("progress-bar").innerText = progress + "%";
-
-            // Once 100% is reached, show the success message and the next button
-            if (shareClicks === 5) {
-                document.getElementById("success-message").style.display = "block"; // Show success message
-                document.getElementById("data-btn").style.display = "block"; // Show data button
-            }
-        }
-    </script>
 </body>
+
 </html>
